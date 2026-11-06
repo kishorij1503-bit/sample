@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 id="content">Page 1: Welcome!</h2>
+<button onclick="nextPage()">Next Page</button>
+
+<script>
+var nextPageData = "";
+var clicked = false;
+
+setTimeout(function() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "Page2.jsp", true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            nextPageData = xhr.responseText;
+
+            if (clicked) {
+                document.getElementById("content").innerHTML =
+                    nextPageData;
+            }
+        }
+    };
+
+    xhr.send();
+}, 3000);
+
+function nextPage() {
+    clicked = true;
+
+    if (nextPageData != "") {
+        document.getElementById("content").innerHTML = nextPageData;
+    } else {
+        document.getElementById("content").innerHTML = "Loading...";
+    }
+}
+</script>
+
+</body>
+</html>
